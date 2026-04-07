@@ -14,7 +14,7 @@ export default function AddStudent() {
     is_active: 1,
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     await fetch("/api/students", {
@@ -33,7 +33,7 @@ export default function AddStudent() {
       <form onSubmit={handleSubmit}>
         <div className="row">
 
-          <input type="hidden" name="center_id" value={form.center_id} />
+          <input type="hidden" name="center_id" value={form.center} />
 
           <div className="col-md-6 mb-3">
             <label>Zone</label>

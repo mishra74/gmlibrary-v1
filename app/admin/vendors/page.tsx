@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function VendorsPage() {
-  const [vendors, setVendors] = useState([]);
+  const [vendors, setVendors] = useState<{ id: number; name: string; email: string; phone: string; is_active: boolean; created_at: string; updated_at: string }[]>([]);
 
   useEffect(() => {
     fetch("/api/vendors")
@@ -12,7 +12,7 @@ export default function VendorsPage() {
       .then((data) => setVendors(data));
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this Vendor?")) return;
 
     await fetch(`/api/vendors/${id}`, {
@@ -105,7 +105,7 @@ export default function VendorsPage() {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="8" className="text-center">
+                        <td colSpan={8} className="text-center">
                           No Vendors Found
                         </td>
                       </tr>

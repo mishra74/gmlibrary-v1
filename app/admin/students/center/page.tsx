@@ -2,8 +2,16 @@
 
 import { useEffect, useState } from "react";
 
+interface Center {
+  id: number;
+  center_name: string;
+  center_address: string;
+  zone?: { name: string };
+  center_capacity: number;
+}
+
 export default function CentersPage() {
-  const [centers, setCenters] = useState([]);
+  const [centers, setCenters] = useState<Center[]>([]);
 
   useEffect(() => {
     fetch("/api/centers")
@@ -11,7 +19,7 @@ export default function CentersPage() {
       .then(data => setCenters(data));
   }, []);
 
-  const handleSelect = async (centerId) => {
+  const handleSelect = async (centerId: number) => {
     await fetch("/api/student/select-center", {
       method: "POST",
       body: JSON.stringify({ center_id: centerId }),

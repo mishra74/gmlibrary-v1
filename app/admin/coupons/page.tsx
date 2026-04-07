@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 export default function CouponsPage() {
-  const [coupons, setCoupons] = useState([]);
+  const [coupons, setCoupons] = useState<{ id: number; couon_code: string; discount_value: number; discount_type: string; is_active: boolean }[]>([]);
 
   useEffect(() => {
     fetch("/api/coupons")
@@ -10,7 +10,7 @@ export default function CouponsPage() {
       .then(setCoupons);
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     if (!confirm("Delete coupon?")) return;
 
     await fetch(`/api/coupons/${id}`, {

@@ -2,9 +2,25 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
+interface Section {
+  section_name: string;
+  center_capacity: string;
+  rows: string;
+  columns: string;
+  end_column: string;
+  is_active: number;
+}
+
 export default function EditSection() {
   const { id } = useParams();
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState<Section>({
+    section_name: "",
+    center_capacity: "",
+    rows: "",
+    columns: "",
+    end_column: "",
+    is_active: 1,
+  });
 
   useEffect(() => {
     fetch(`/api/sections/${id}`)
@@ -12,19 +28,19 @@ export default function EditSection() {
       .then(setForm);
   }, [id]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    await fetch(`/api/sections/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
+  await fetch(`/api/sections/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(form),
+  });
 
-    alert("Updated Successfully");
-  };
+  alert("Updated Successfully");
+};
 
   return (
     <form onSubmit={handleSubmit} className="container mt-4">
@@ -66,7 +82,7 @@ export default function EditSection() {
 
       <select
         value={form.is_active ?? 1}
-        onChange={(e) => setForm({ ...form, is_active: e.target.value })}
+        onChange={(e) => setForm({ ...form, is_active: parseInt(e.target.value) })}
         className="form-control mb-2"
       >
         <option value="1">Active</option>

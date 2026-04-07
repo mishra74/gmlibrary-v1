@@ -2,9 +2,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
+interface Coupon {
+  coupon_code: string;
+}
+
 export default function EditCoupon() {
   const { id } = useParams();
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState<Coupon>({
+    coupon_code: "",
+  });
 
   useEffect(() => {
     fetch(`/api/coupons/${id}`)
@@ -12,7 +18,7 @@ export default function EditCoupon() {
       .then(setForm);
   }, [id]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     await fetch(`/api/coupons/${id}`, {
@@ -29,8 +35,8 @@ export default function EditCoupon() {
       <h4>Edit Coupon</h4>
 
       <input
-        value={form.couon_code || ""}
-        onChange={(e) => setForm({ ...form, couon_code: e.target.value })}
+        value={form.coupon_code || ""}
+        onChange={(e) => setForm({ ...form, coupon_code: e.target.value })}
         className="form-control mb-2"
       />
 

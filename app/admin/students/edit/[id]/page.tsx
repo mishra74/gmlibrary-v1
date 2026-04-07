@@ -2,10 +2,21 @@
 
 import { useEffect, useState } from "react";
 
-export default function EditClientPage({ params }) {
-  const [client, setClient] = useState({});
-  const [companies, setCompanies] = useState([]);
-  const [countries, setCountries] = useState([]);
+interface Client {
+  name: string;
+  company_id: string;
+  email: string;
+  phone: string;
+  gstin: string;
+  is_active: number;
+  country: string;
+  address: string;
+}
+
+export default function EditClientPage({ params }: { params: { id: string } }) {
+  const [client, setClient] = useState<Partial<Client>>({});
+  const [companies, setCompanies] = useState<{ id: number; name: string }[]>([]);
+  const [countries, setCountries] = useState<{ id: number; name: string }[]>([]);
 
   const id = params.id;
 
@@ -25,14 +36,14 @@ export default function EditClientPage({ params }) {
       .then((data) => setCountries(data));
   }, [id]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setClient({
       ...client,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     await fetch(`/api/clients/${id}`, {

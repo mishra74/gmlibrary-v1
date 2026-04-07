@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 export default function AddVendor() {
   const router = useRouter();
 
-  const [centers, setCenters] = useState([]);
+  const [centers, setCenters] = useState<{ id: number; center_name: string }[]>([]);
   const [formData, setFormData] = useState({
-    center_id: [],
+    center_id: [] as number[],
     name: "",
     email: "",
     phone: "",
@@ -24,13 +24,13 @@ export default function AddVendor() {
   }, []);
 
   // Handle input change
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   // Handle checkbox (multiple centers)
-  const handleCheckbox = (id) => {
+  const handleCheckbox = (id: number) => {
     let updatedCenters = [...formData.center_id];
 
     if (updatedCenters.includes(id)) {
@@ -43,7 +43,7 @@ export default function AddVendor() {
   };
 
   // Submit
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     await fetch("/api/vendors", {

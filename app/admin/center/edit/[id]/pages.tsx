@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 export default function EditCenter() {
   const { id } = useParams();
 
-  const [zones, setZones] = useState([]);
+  const [zones, setZones] = useState<{ id: number; name: string }[]>([]);
   const [form, setForm] = useState({
     zone_id: "",
     center_name: "",
@@ -17,13 +17,13 @@ export default function EditCenter() {
 
   useEffect(() => {
     // fetch zones + center data
-    setZones([]);
+    setZones([{ id: 1, name: "Zone 1" }]);
 
     const data = {
-      zone_id: 1,
+      zone_id: "1",
       center_name: "Center 1",
-      center_capacity: 100,
-      admission_fee: 500,
+      center_capacity: "100",
+      admission_fee: "500",
       is_active: 1,
       center_address: "Address here",
     };
@@ -31,7 +31,7 @@ export default function EditCenter() {
     setForm(data);
   }, [id]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Update:", form);
   };
@@ -103,7 +103,7 @@ export default function EditCenter() {
                   className="form-control"
                   value={form.is_active}
                   onChange={(e) =>
-                    setForm({ ...form, is_active: e.target.value })
+                    setForm({ ...form, is_active: parseInt(e.target.value) })
                   }
                 >
                   <option value={1}>Yes</option>

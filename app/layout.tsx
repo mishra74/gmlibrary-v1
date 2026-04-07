@@ -1,15 +1,18 @@
-// app/layout.js
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
+import { ReactNode } from "react";
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
         <link href="/admin_assets/css/app.min.css" rel="stylesheet" />
         <link href="/admin_assets/css/icons.min.css" rel="stylesheet" />
-        <link href="/admin_assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+        <link
+          href="/admin_assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css"
+          rel="stylesheet"
+        />
       </head>
       <body>
         <div className="wrapper">
@@ -17,11 +20,8 @@ export default function RootLayout({ children }) {
           <Sidebar />
 
           <div className="content-page">
-            <div className="content">
-              {children}
-            </div>
+            <div className="content">{children}</div>
 
-            {/* Footer */}
             <footer className="footer">
               <div className="container-fluid">
                 <div className="row">
@@ -32,11 +32,9 @@ export default function RootLayout({ children }) {
                 </div>
               </div>
             </footer>
-
           </div>
         </div>
 
-        {/* JS */}
         <script src="/admin_assets/js/vendor.min.js"></script>
         <script src="/admin_assets/js/app.min.js"></script>
       </body>

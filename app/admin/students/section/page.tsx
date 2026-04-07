@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 
 export default function SectionsPage() {
-  const [sections, setSections] = useState([]);
-  const [shiftData, setShiftData] = useState(null);
+  const [sections, setSections] = useState<{ id: number; section_name: string; center?: { center_name: string }; columns: number; end_column: number; center_capacity: number; rows: number; shifts: { id: number; shift_name: string }[] }[]>([]);
+  const [shiftData, setShiftData] = useState<{ shift_name: string; price: number; start_time: string; end_time: string } | null>(null);
 
   useEffect(() => {
     fetch("/api/sections")
@@ -12,7 +12,7 @@ export default function SectionsPage() {
       .then(data => setSections(data));
   }, []);
 
-  const getShiftData = async (sectionId, shiftId) => {
+  const getShiftData = async (sectionId: number, shiftId: number) => {
     const res = await fetch("/api/shift", {
       method: "POST",
       body: JSON.stringify({ id: sectionId, shift: shiftId }),

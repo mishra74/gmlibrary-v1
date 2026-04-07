@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 
-export default function ShiftList({ shifts = [] }) {
-  const handleDelete = async (id) => {
+export default function ShiftList({ shifts = [] }: { shifts: { id: number; shift_name: string; start_time: string; end_time: string; shift_type: string; mrp: number; discount: number; price: number; bookings_count?: number; is_active: boolean }[] }) {
+  const handleDelete = async (id: number) => {
     if (!confirm("Delete this shift?")) return;
 
     await fetch(`/api/shifts/${id}`, {

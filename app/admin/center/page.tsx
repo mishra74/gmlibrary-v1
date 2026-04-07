@@ -1,8 +1,19 @@
 "use client";
 import Link from "next/link";
 
+interface Center {
+  id: number;
+  center_name: string;
+  zone?: { name: string };
+  admission_fee: number;
+  center_capacity: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export default function CenterPage() {
-  const centers = []; // replace with API data
+  const centers: Center[] = []; // replace with API data
 
   return (
     <div className="container-fluid p-4">

@@ -1,8 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-
+type Zone = {
+  id: number;
+  name: string;
+};
 export default function AddCenter() {
-  const [zones, setZones] = useState([]);
+  const [zones, setZones] = useState<Zone[]>([]);
   const [form, setForm] = useState({
     zone_id: "",
     center_name: "",
@@ -17,7 +20,7 @@ export default function AddCenter() {
     setZones([]);
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(form);
   };
@@ -92,7 +95,7 @@ export default function AddCenter() {
                   className="form-control"
                   value={form.is_active}
                   onChange={(e) =>
-                    setForm({ ...form, is_active: e.target.value })
+                    setForm({ ...form, is_active: Number(e.target.value) })
                   }
                 >
                   <option value={1}>Yes</option>

@@ -13,7 +13,7 @@ export default function AddCoupon() {
     assign: "student",
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     await fetch("/api/coupons", {

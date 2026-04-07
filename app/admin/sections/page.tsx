@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function SectionsPage() {
-  const [sections, setSections] = useState([]);
+  const [sections, setSections] = useState<{ id: number; center?: { center_name: string }; section_name: string; center_capacity: number; rows: number; columns: number; booking: number; is_active: boolean }[]>([]);
 
   useEffect(() => {
     fetch("/api/sections")
@@ -11,7 +11,7 @@ export default function SectionsPage() {
       .then(setSections);
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     if (!confirm("Delete this section?")) return;
 
     await fetch(`/api/sections/${id}`, {

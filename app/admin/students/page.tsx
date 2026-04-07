@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function StudentsPage() {
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState<{ id: number; name: string; email: string; phone: string; gender: string; is_active: boolean }[]>([]);
 
   useEffect(() => {
     fetch("/api/students")
@@ -12,7 +12,7 @@ export default function StudentsPage() {
       .then(data => setStudents(data));
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     if (!confirm("Delete student?")) return;
 
     await fetch(`/api/students/${id}`, { method: "DELETE" });

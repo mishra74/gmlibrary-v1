@@ -8,9 +8,9 @@ export default function AssignCenters() {
   const { id } = useParams(); // vendor id
   const router = useRouter();
 
-  const [vendor, setVendor] = useState(null);
-  const [centers, setCenters] = useState([]);
-  const [selectedCenters, setSelectedCenters] = useState([]);
+  const [vendor, setVendor] = useState<{ name: string } | null>(null);
+  const [centers, setCenters] = useState<{ id: number; center_name: string }[]>([]);
+  const [selectedCenters, setSelectedCenters] = useState<number[]>([]);
 
   // Fetch vendor + centers
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function AssignCenters() {
   }, [id]);
 
   // handle checkbox
-  const handleCheckbox = (centerId) => {
+  const handleCheckbox = (centerId: number) => {
     let updated = [...selectedCenters];
 
     if (updated.includes(centerId)) {
@@ -42,7 +42,7 @@ export default function AssignCenters() {
   };
 
   // submit
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     await fetch(`/api/vendors/${id}/assign-centers`, {

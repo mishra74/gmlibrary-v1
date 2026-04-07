@@ -7,9 +7,9 @@ export default function EditVendor() {
   const { id } = useParams();
   const router = useRouter();
 
-  const [vendor, setVendor] = useState(null);
-  const [centers, setCenters] = useState([]);
-  const [selectedCenters, setSelectedCenters] = useState([]);
+  const [vendor, setVendor] = useState<{ name: string; email: string; phone: string; is_active: number } | null>(null);
+  const [centers, setCenters] = useState<{ id: number; center_name: string }[]>([]);
+  const [selectedCenters, setSelectedCenters] = useState<number[]>([]);
 
   // Fetch vendor + centers
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function EditVendor() {
   }, [id]);
 
   // Handle checkbox change
-  const handleCheckbox = (centerId) => {
+  const handleCheckbox = (centerId: number) => {
     if (selectedCenters.includes(centerId)) {
       setSelectedCenters(selectedCenters.filter((c) => c !== centerId));
     } else {
@@ -36,8 +36,10 @@ export default function EditVendor() {
   };
 
   // Handle submit
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!vendor) return;
 
     const res = await fetch(`/api/vendors/${id}`, {
       method: "PUT",

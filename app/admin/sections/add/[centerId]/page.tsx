@@ -14,7 +14,7 @@ export default function AddSection() {
     is_active: 1,
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     await fetch("/api/sections", {
@@ -68,7 +68,7 @@ export default function AddSection() {
 
       <select
         className="form-control mb-2"
-        onChange={(e) => setForm({ ...form, is_active: e.target.value })}
+        onChange={(e) => setForm({ ...form, is_active: parseInt(e.target.value) })}
       >
         <option value="1">Active</option>
         <option value="0">Inactive</option>

@@ -2,21 +2,47 @@
 
 import { useState } from "react";
 
+interface ShiftForm {
+  shift_name: string;
+  start_time: string;
+  end_time: string;
+  shift_type: string;
+  mrp: string;
+  discount: string;
+  price: string;
+  min_days: string;
+  description: string;
+  is_active: number;
+}
+
 export default function AddShift() {
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState<ShiftForm>({
+    shift_name: "",
+    start_time: "",
+    end_time: "",
+    shift_type: "",
+    mrp: "",
+    discount: "",
+    price: "",
+    min_days: "",
+    description: "",
+    is_active: 1,
+  });
   const [showCourse, setShowCourse] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
-    setForm({ ...form, [name]: value });
+    const parsedValue = name === "is_active" ? parseInt(value) : value;
+
+    setForm({ ...form, [name]: parsedValue });
 
     if (name === "shift_type") {
       setShowCourse(value === "library_course");
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     await fetch("/api/shifts", {
